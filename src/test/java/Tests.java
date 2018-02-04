@@ -1,4 +1,5 @@
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 
@@ -6,6 +7,65 @@ public class Tests {
     public static void main(String[] args) {
 
     }
+
+
+
+    @DataProvider(name = "provider1")
+    public Object[][] createData1() {
+        return new Object[][] {
+                { "23213213@gmail.com", true },
+                { "23213213@yandex.ru", true},
+                { "@gmail.com", false },
+                { " @gmail.com", false},
+                { "23213213@", false },
+                { "23213213@.com", false}
+        };
+    }
+
+    @Test(dataProvider = "provider1")
+    public void verifyData1(String n1, boolean n2) {
+        System.out.println("E-mail: " + n1 + " " + n2);
+    }
+
+    @DataProvider(name = "provider2")
+    public Object[][] createData2() {
+        return new Object[][] {
+                { "1450", true },
+                { "1451", true},
+                { "2450", true },
+                { "1390", false},
+                { "999", false },
+                { "45 0", false}
+        };
+    }
+
+    @Test(dataProvider = "provider2")
+    public void verifyData2(String n1, boolean n2) {
+        System.out.println("Value: " + n1 + " " + n2);
+    }
+
+    @DataProvider(name = "provider3")
+    public Object[][] createData3() {
+        return new Object[][] {
+                { "100", true },
+                { "100.4", true},
+                { "100,4", false },
+                { "99.99", false},
+                { "99", false },
+                { "101", true}
+        };
+    }
+
+    @Test(dataProvider = "provider3")
+    public void verifyData3(String n1, boolean n2) {
+        System.out.println("Price: " + n1 + " " + n2);
+    }
+
+
+
+
+
+
     // Test for first regex (^(?:[^@]+(?:@gmail.com|@yandex.ru)?(?:,|$))*$)
     @Test
     public static void testCheckEmail1() {
